@@ -39,7 +39,7 @@ class G923:
         if evdev != None:
             device = evdev.InputDevice('/dev/input/event1')
             print(device)
-            device.capabilities(verbose=True)
+            print(device.capabilities(verbose=True))
     
     def get_button(self, button):
         if self.joystick == None:
