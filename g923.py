@@ -4,9 +4,9 @@ import time
 
 try:
     import evdev
-    logging.info("Loaded pigpio library")
+    logging.info("Loaded evdev library")
 except ImportError as e:
-    logging.warning("Failed to load pigpio library, running in debug mode")
+    logging.warning("Failed to evdev library, disabling evdev support")
     evdev = None
 
 GAS_PEDAL_AXIS = 2
