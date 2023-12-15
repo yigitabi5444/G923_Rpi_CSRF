@@ -61,8 +61,10 @@ def main():
         if joystick is not None:
             print_joystick_axis_data(joystick)
         else:
-            #print joystick count
-            logging.info("Joystick count: %d" % pygame.joystick.get_count())
+            if pygame.joystick.get_count() > 0:
+                joystick = pygame.joystick.Joystick(0)
+                joystick.init()
+                logging.info(f"Joystick {joystick.get_instance_id()} connencted")
             
     
 if __name__ == '__main__':
