@@ -4,6 +4,7 @@ import time
 
 try:
     import evdev
+    from evdev import ecodes, InputDevice, ff, list_devices
     logging.info("Loaded evdev library")
 except ImportError as e:
     logging.warning("Failed to evdev library, disabling evdev support")
@@ -32,6 +33,15 @@ MINUS = 20
 ENTER = 23
 PS = 24
 
+#Effect types
+FF_AUTOCENTER = 97
+
+def send_effect(device, effect_id):
+    if evdev == None:
+        return
+
+    device.write(ecodes.EV_FF, effect_id, 0)
+
 class G923:
     joystick:pygame.joystick.JoystickType
     def __init__(self, joystick):
@@ -40,6 +50,7 @@ class G923:
             device = evdev.InputDevice('/dev/input/event1')
             print(device)
             print(device.capabilities(verbose=True))
+            send_effect(device, FF_AUTOCENTER)
     
     def get_button(self, button):
         if self.joystick == None:
