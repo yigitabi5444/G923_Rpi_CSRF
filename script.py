@@ -22,10 +22,8 @@ def print_joystick_axis_data(joystick:pygame.joystick.JoystickType):
     time.sleep(0.2)
     
 def main():
-    logging.info("test")
-    pygame.init()
+    pygame.joystick.init()
     joystick = None
-    logging.info("test")
     
     done = False
     while not done:
@@ -62,5 +60,4 @@ def main():
             
     
 if __name__ == '__main__':
-    logging.info("test")
     main()
