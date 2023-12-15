@@ -1,7 +1,7 @@
 import pygame
 import logging
 import g923
-import time
+import serial
 # Disable video driver
 import os
 os.environ["SDL_VIDEODRIVER"] = "dummy"
@@ -15,17 +15,30 @@ except ImportError as e:
     logging.warn("Failed to load pigpio library, running in debug mode")
     pigpio = None
     
-def print_joystick_axis_data(joystick:pygame.joystick.JoystickType):
-    for i in range(joystick.get_numaxes()):
-        logging.info("Axis %d: %f" % (i, joystick.get_axis(i)))
-    for i in range(joystick.get_numbuttons()):
-        logging.info("Button %d: %d" % (i, joystick.get_button(i)))
-    for i in range(joystick.get_numhats()):
-        logging.info("Hat %d: %s" % (i, str(joystick.get_hat(i))))
-    time.sleep(0.2)
+def map_to_int(value:float, in_min:float, in_max:float, out_min:int, out_max:int):
+    return int((value - in_min) * (out_max - out_min) / (in_max - in_min) + out_min)
+    
+try:
+    from crsf_parser.payloads import PacketsTypes
+    from crsf_parser import crsf_frame
+    from crsf_parser.handling import crsf_build_frame
+except ImportError as e:
+    logging.warn("Failed to load crsf_parser library, running in debug mode")
+    crsf_frame = None
+    crsf_build_frame = None
+    PacketsTypes = None
     
 def main():
     pygame.init()
+    try:
+        ser = serial.Serial('dev/serial0',
+                        baudrate=425000,
+                        parity=serial.PARITY_NONE,
+                        stopbits=serial.STOPBITS_ONE)
+    except:
+        logging.error("Failed to open serial port")
+        ser = None
+        
     controller = None
     done = False
     while not done:
@@ -49,6 +62,15 @@ def main():
                 logging.info(f"Joystick {event.instance_id} disconnected")
         if controller != None:
             controller.print_data()
+            if crsf_frame == None or ser == None:
+                continue
+            throttle_value = map_to_int(controller.get_combined_throttle(), -1, 1, 1000, 2000)
+            steering_value = map_to_int(controller.get_steering(), -1, 1, 1000, 2000)
+            frame = crsf_build_frame(
+                PacketsTypes.RC_CHANNELS_PACKED,
+                {"channels": [throttle_value, steering_value, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]},)
+            ser.write(frame)
+        
             
     
 if __name__ == '__main__':

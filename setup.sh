@@ -1,6 +1,6 @@
 #Add lg4ff to kernel
 sudo pip install --upgrade pip
-sudo pip install evdev
+sudo pip install crsf-parser
 sudo pip install pygame
 sudo pip install --upgrade pygame
 sudo apt-get install dkms

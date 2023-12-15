@@ -2,14 +2,6 @@ import pygame
 import logging
 import time
 
-try:
-    import evdev
-    from evdev import ecodes, InputDevice, ff, list_devices
-    logging.info("Loaded evdev library")
-except ImportError as e:
-    logging.warning("Failed to evdev library, disabling evdev support")
-    evdev = None
-
 GAS_PEDAL_AXIS = 2
 BRAKE_PEDAL_AXIS = 3
 STEERING_AXIS = 0
@@ -33,34 +25,11 @@ MINUS = 20
 ENTER = 23
 PS = 24
 
-#Effect types
-FF_AUTOCENTER = 97
-
-def send_effect(device):
-    if evdev == None:
-        return
-    rumble = ff.Rumble(strong_magnitude=0xffff, weak_magnitude=0xffff)
-    effect_type = ff.EffectType(ff_rumble_effect=rumble)
-    duration_ms = 1000
-
-    effect = ff.Effect(
-        ecodes.FF_RUMBLE, -1, 0,
-        ff.Trigger(0, 0),
-        ff.Replay(duration_ms, 0),
-        effect_type
-    )
-    effect_id = device.upload_effect(effect)
-    device.write(evdev.ecodes.EV_FF, effect_id, 1)
 class G923:
     joystick:pygame.joystick.JoystickType
     def __init__(self, joystick):
         self.joystick = joystick
-        if evdev != None:
-            device = evdev.InputDevice('/dev/input/event1')
-            print(device)
-            print(device.capabilities(verbose=True))
-            send_effect(device)
-    
+        
     def get_button(self, button):
         if self.joystick == None:
             return False
