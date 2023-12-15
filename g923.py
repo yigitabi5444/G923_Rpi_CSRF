@@ -1,3 +1,58 @@
-GAS_PEDAL_AXIS = 1
+import pygame
+
+GAS_PEDAL_AXIS = 2
 BRAKE_PEDAL_AXIS = 2
 STEERING_AXIS = 0
+CLUTCH_PEDAL_AXIS = 3
+X_BUTTON = 0
+SQUARE_BUTTON = 1
+CIRCLE_BUTTON = 2
+TRIANGLE_BUTTON = 3
+R1 = 4
+L1 = 5
+R2 = 6
+L2 = 7
+SHARE = 8
+OPTIONS = 9
+R3 = 10
+L3 = 11
+ROTARY_DIAL_CW = 21
+ROTARY_DIAL_CCW = 22
+PLUS = 19
+MINUS = 20
+ENTER = 23
+PS = 24
+
+class G923:
+    joystick:pygame.joystick.JoystickType
+    def __init__(self, joystick):
+        self.joystick = joystick
+    
+    def get_button(self, button):
+        if self.joystick == None:
+            return False
+        return self.joystick.get_button(button)
+    
+    def get_gas_pedal(self):
+        if self.joystick == None:
+            return 0
+        value = self.joystick.get_axis(GAS_PEDAL_AXIS)
+        value = (1-value)/2
+        return value
+    
+    def get_brake_pedal(self):
+        if self.joystick == None:
+            return 0
+        value = self.joystick.get_axis(BRAKE_PEDAL_AXIS)
+        value = (1-value)/2
+        return value
+    
+    def get_combined_throttle(self):
+        if self.joystick == None:
+            return 0
+        return self.get_gas_pedal() - self.get_brake_pedal()
+    
+    def get_steering(self):
+        if self.joystick == None:
+            return 0
+        return self.joystick.get_axis(STEERING_AXIS)
