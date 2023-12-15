@@ -25,7 +25,6 @@ def print_joystick_axis_data(joystick:pygame.joystick.JoystickType):
     time.sleep(0.2)
     
 def main():
-    pygame.display.
     pygame.init()
     joystick = None
     
