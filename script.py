@@ -21,9 +21,6 @@ def print_joystick_axis_data(joystick:pygame.joystick.JoystickType):
         logging.info("Hat %d: %s" % (i, str(joystick.get_hat(i))))
     time.sleep(0.2)
     
-def print_joystick_info():
-    logging.info("Gas Pedal: %f, Brake Pedal: %f, Steering Wheel: %f" % (gas_pedal, brake_pedal, steering_wheel))
-
 def main():
     pygame.init()
     joystick = None
