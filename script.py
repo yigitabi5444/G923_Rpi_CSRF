@@ -38,13 +38,13 @@ def main():
                 done = True  # Flag that we are done so we exit this loop.
 
             if event.type == pygame.JOYBUTTONDOWN:
-                print("Joystick button pressed.")
+                logging.info("Joystick button pressed.")
                 if event.button == 0:
                     if joystick.rumble(0, 0.7, 500):
-                        print(f"Rumble effect played on joystick {event.instance_id}")
+                        logging.info(f"Rumble effect played on joystick {event.instance_id}")
 
             if event.type == pygame.JOYBUTTONUP:
-                print("Joystick button released.")
+                logging.info("Joystick button released.")
 
             # Handle hotplugging
             if event.type == pygame.JOYDEVICEADDED:
@@ -52,11 +52,11 @@ def main():
                 # joystick, filling up the list without needing to create them manually.
                 joy = pygame.joystick.Joystick(event.device_index)
                 joystick = joy
-                print(f"Joystick {joy.get_instance_id()} connencted")
+                logging.info(f"Joystick {joy.get_instance_id()} connencted")
 
             if event.type == pygame.JOYDEVICEREMOVED:
                 joystick = None
-                print(f"Joystick {event.instance_id} disconnected")
+                logging.info(f"Joystick {event.instance_id} disconnected")
         
         if joystick is not None:
             print_joystick_axis_data(joystick)
