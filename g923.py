@@ -59,7 +59,7 @@ class G923:
             device = evdev.InputDevice('/dev/input/event1')
             print(device)
             print(device.capabilities(verbose=True))
-            send_effect(device, FF_AUTOCENTER)
+            send_effect(device)
     
     def get_button(self, button):
         if self.joystick == None:
