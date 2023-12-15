@@ -36,12 +36,21 @@ PS = 24
 #Effect types
 FF_AUTOCENTER = 97
 
-def send_effect(device, effect_id):
+def send_effect(device):
     if evdev == None:
         return
+    rumble = ff.Rumble(strong_magnitude=0x0000, weak_magnitude=0xffff)
+    effect_type = ff.EffectType(ff_rumble_effect=rumble)
+    duration_ms = 1000
 
-    device.write(ecodes.EV_FF, effect_id, 0)
-
+    effect = ff.Effect(
+        ecodes.FF_RUMBLE, -1, 0,
+        ff.Trigger(0, 0),
+        ff.Replay(duration_ms, 0),
+        effect_type
+    )
+    effect_id = device.upload_effect(effect)
+    device.write(evdev.ecodes.EV_FF, effect_id, 1)
 class G923:
     joystick:pygame.joystick.JoystickType
     def __init__(self, joystick):
