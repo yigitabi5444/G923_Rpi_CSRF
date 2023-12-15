@@ -7,5 +7,5 @@ sudo git clone https://github.com/yigitabi5444/G923_Rpi_CSRF.git && cd G923* && 
 
 One line rpi test:
 ```
-sudo rm -rf ./G923_Rpi_CSRF && sudo git clone https://github.com/yigitabi5444/G923_Rpi_CSRF.git && cd G923* && sudo sh run.sh
+cd ~ && sudo rm -rf ./G923_Rpi_CSRF && sudo git clone https://github.com/yigitabi5444/G923_Rpi_CSRF.git && cd G923* && sudo sh run.sh
 ```

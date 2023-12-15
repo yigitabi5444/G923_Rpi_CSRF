@@ -2,6 +2,9 @@ import pygame
 import logging
 import g923
 import time
+# Disable video driver
+import os
+os.environ["SDL_VIDEODRIVER"] = "dummy"
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -22,7 +25,8 @@ def print_joystick_axis_data(joystick:pygame.joystick.JoystickType):
     time.sleep(0.2)
     
 def main():
-    pygame.joystick.init()
+    pygame.display.
+    pygame.init()
     joystick = None
     
     done = False
