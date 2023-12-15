@@ -39,7 +39,7 @@ FF_AUTOCENTER = 97
 def send_effect(device):
     if evdev == None:
         return
-    rumble = ff.Rumble(strong_magnitude=0x0000, weak_magnitude=0xffff)
+    rumble = ff.Rumble(strong_magnitude=0xffff, weak_magnitude=0xffff)
     effect_type = ff.EffectType(ff_rumble_effect=rumble)
     duration_ms = 1000
 
