@@ -1,6 +1,7 @@
 import pygame
 import logging
 import g923
+import time
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -22,6 +23,12 @@ def get_joystick_data(joystick:pygame.joystick.JoystickType):
     brake_pedal = joystick.get_axis(g923.BRAKE_PEDAL_AXIS)
     steering_wheel = joystick.get_axis(g923.STEERING_AXIS)
     
+def print_joystick_axis_data(joystick:pygame.joystick.JoystickType):
+    logging.info("")
+    logging.info("")
+    for i in range(joystick.get_numaxes()):
+        logging.info("Axis %d: %f" % (i, joystick.get_axis(i)))
+    
 def print_joystick_info():
     logging.info("Gas Pedal: %f, Brake Pedal: %f, Steering Wheel: %f" % (gas_pedal, brake_pedal, steering_wheel))
 
@@ -38,8 +45,8 @@ def main():
     joystick.init()
     
     while True:
-        get_joystick_data(joystick)
-        print_joystick_info()
+        print_joystick_axis_data(joystick)
+        time.sleep(0.1)
             
     
 if __name__ == '__main__':
