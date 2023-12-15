@@ -1,5 +1,7 @@
 #Add lg4ff to kernel
-pip install pygame
+sudo pip install --upgrade pip
+sudo pip install pygame
+sudo pip install --upgrade pygame
 sudo apt-get install dkms
 cd /usr/src
 sudo git clone https://github.com/berarma/new-lg4ff.git

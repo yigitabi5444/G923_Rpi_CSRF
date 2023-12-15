@@ -1,7 +1,9 @@
 import pygame
+import logging
+import time
 
 GAS_PEDAL_AXIS = 2
-BRAKE_PEDAL_AXIS = 2
+BRAKE_PEDAL_AXIS = 1
 STEERING_AXIS = 0
 CLUTCH_PEDAL_AXIS = 3
 X_BUTTON = 0
@@ -56,3 +58,10 @@ class G923:
         if self.joystick == None:
             return 0
         return self.joystick.get_axis(STEERING_AXIS)
+    
+    def print_data(self):
+        logging.info("Gas pedal: %f" % (self.get_gas_pedal()*100))
+        logging.info("Brake pedal: %f" % (self.get_brake_pedal()*100))
+        logging.info("Combined throttle: %f" % (self.get_combined_throttle()*100))
+        logging.info("Steering: %f" % (self.get_steering()*100))
+        time.sleep(0.2)
