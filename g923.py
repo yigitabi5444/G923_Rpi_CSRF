@@ -2,6 +2,13 @@ import pygame
 import logging
 import time
 
+try:
+    import evdev
+    logging.info("Loaded pigpio library")
+except ImportError as e:
+    logging.warning("Failed to load pigpio library, running in debug mode")
+    evdev = None
+
 GAS_PEDAL_AXIS = 2
 BRAKE_PEDAL_AXIS = 3
 STEERING_AXIS = 0
@@ -29,6 +36,10 @@ class G923:
     joystick:pygame.joystick.JoystickType
     def __init__(self, joystick):
         self.joystick = joystick
+        if evdev != None:
+            device = evdev.InputDevice('/dev/input/event1')
+            print(device)
+            device.capabilities(verbose=True)
     
     def get_button(self, button):
         if self.joystick == None:
