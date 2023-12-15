@@ -13,19 +13,13 @@ except ImportError as e:
     pigpio = None
     
 def print_joystick_axis_data(joystick:pygame.joystick.JoystickType):
-    logging.info("")
-    logging.info("")
-    logging.info("")
-    logging.info("")
-    logging.info("")
-    logging.info("")
     for i in range(joystick.get_numaxes()):
         logging.info("Axis %d: %f" % (i, joystick.get_axis(i)))
     for i in range(joystick.get_numbuttons()):
         logging.info("Button %d: %d" % (i, joystick.get_button(i)))
     for i in range(joystick.get_numhats()):
         logging.info("Hat %d: %s" % (i, str(joystick.get_hat(i))))
-    time.sleep(0.1)
+    time.sleep(0.2)
     
 def print_joystick_info():
     logging.info("Gas Pedal: %f, Brake Pedal: %f, Steering Wheel: %f" % (gas_pedal, brake_pedal, steering_wheel))
@@ -61,7 +55,7 @@ def main():
                 print(f"Joystick {joy.get_instance_id()} connencted")
 
             if event.type == pygame.JOYDEVICEREMOVED:
-                del joystick
+                joystick = None
                 print(f"Joystick {event.instance_id} disconnected")
         
         if joystick is not None:
