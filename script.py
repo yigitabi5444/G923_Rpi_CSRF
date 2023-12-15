@@ -47,8 +47,8 @@ def main():
             if event.type == pygame.JOYDEVICEREMOVED:
                 controller = None
                 logging.info(f"Joystick {event.instance_id} disconnected")
-        
-        controller.print_data()
+        if controller != None:
+            controller.print_data()
             
     
 if __name__ == '__main__':
