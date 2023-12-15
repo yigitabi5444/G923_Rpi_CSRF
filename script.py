@@ -64,7 +64,7 @@ def main():
             if pygame.joystick.get_count() > 0:
                 joystick = pygame.joystick.Joystick(0)
                 joystick.init()
-                logging.info(f"Joystick {joystick.get_instance_id()} connencted")
+                logging.info(f"Joystick {joystick.get_name()} connencted")
             
     
 if __name__ == '__main__':
