@@ -44,6 +44,7 @@ def main():
     done = False
     last_packet_sent_time = time.time()
     last_log_time = time.time()
+    measured_packet_rate = 0
     while not done:
         # Event processing step.
         # Possible joystick events: JOYAXISMOTION, JOYBALLMOTION, JOYBUTTONDOWN,
@@ -64,10 +65,10 @@ def main():
                 controller = None
                 logging.info(f"Joystick {event.instance_id} disconnected")
         if controller != None:
-            wait_time = 0.004 - (time.time() - last_packet_sent_time)
             if time.time() - last_log_time > 1:
                 last_log_time = time.time()
-                logging.info(f"Throttle: {controller.get_combined_throttle()}, Steering: {controller.get_steering()}, Packet rate: {1/wait_time} Hz")
+                logging.info(f"Throttle: {controller.get_combined_throttle()}, Steering: {controller.get_steering()}, Packet rate: {measured_packet_rate} Hz")
+            wait_time = 0.004 - (time.time() - last_packet_sent_time)
             if wait_time > 0:
                 time.sleep(wait_time)
             if crsf_frame == None or ser == None:
@@ -78,6 +79,7 @@ def main():
                 PacketsTypes.RC_CHANNELS_PACKED,
                 {"channels": [throttle_value, steering_value, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]},)
             ser.write(frame)
+            measured_packet_rate = 1/(time.time() - last_packet_sent_time)
             last_packet_sent_time = time.time()
         
             
