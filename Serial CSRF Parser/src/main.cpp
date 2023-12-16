@@ -38,7 +38,7 @@ void setup() {
   Serial.begin(460800);
   //Serial1.begin(9600, SERIAL_8N1, RXD2, TXD2);
   Serial2.begin(420000, SERIAL_8N1, RXD2, TXD2);
-  delay(1000);
+  delay(3000);
   Serial.println("Serial Txd is on pin: "+String(TX));
   Serial.println("Serial Rxd is on pin: "+String(RX));
   

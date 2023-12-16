@@ -1,3 +1,4 @@
+import time
 import pygame
 import logging
 import g923
@@ -32,7 +33,7 @@ def main():
     pygame.init()
     try:
         ser = serial.Serial('dev/serial1',
-                        baudrate=420000,
+                        baudrate=115000,
                         parity=serial.PARITY_NONE,
                         stopbits=serial.STOPBITS_ONE)
     except:
@@ -41,6 +42,7 @@ def main():
         
     controller = None
     done = False
+    last_packet_sent_time = time.time()
     while not done:
         # Event processing step.
         # Possible joystick events: JOYAXISMOTION, JOYBALLMOTION, JOYBUTTONDOWN,
@@ -61,7 +63,9 @@ def main():
                 controller = None
                 logging.info(f"Joystick {event.instance_id} disconnected")
         if controller != None:
-            controller.print_data()
+            #controller.print_data()
+            #Make sure packet rate is 250Hz
+            time.sleep(last_packet_sent_time + 0.004 - time.time())
             if crsf_frame == None or ser == None:
                 continue
             throttle_value = map_to_int(controller.get_combined_throttle(), -1, 1, 1000, 2000)
@@ -70,6 +74,7 @@ def main():
                 PacketsTypes.RC_CHANNELS_PACKED,
                 {"channels": [throttle_value, steering_value, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]},)
             ser.write(frame)
+            last_packet_sent_time = time.time()
         
             
     
