@@ -77,8 +77,8 @@ def main():
             frame = crsf_build_frame(
                 PacketsTypes.RC_CHANNELS_PACKED,
                 {"channels": [throttle_value, steering_value, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]},)
-            ser.write(frame)
             logging.debug(f"Sent frame: {frame}")
+            ser.write(frame)
             last_packet_sent_time = time.time()
         
             
