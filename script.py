@@ -32,8 +32,8 @@ except ImportError as e:
 def main():
     pygame.init()
     try:
-        ser = serial.Serial('/dev/ttyAMA0',
-                        baudrate=115000,
+        ser = serial.Serial('/dev/serial0',
+                        baudrate=420000,
                         parity=serial.PARITY_NONE,
                         stopbits=serial.STOPBITS_ONE)
     except:
