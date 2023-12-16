@@ -65,7 +65,9 @@ def main():
         if controller != None:
             #controller.print_data()
             #Make sure packet rate is 250Hz
-            time.sleep(last_packet_sent_time + 0.004 - time.time())
+            wait_time = 0.004 - (time.time() - last_packet_sent_time)
+            if wait_time > 0:
+                time.sleep(wait_time)
             if crsf_frame == None or ser == None:
                 continue
             throttle_value = map_to_int(controller.get_combined_throttle(), -1, 1, 1000, 2000)
