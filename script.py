@@ -67,7 +67,7 @@ def main():
             wait_time = 0.004 - (time.time() - last_packet_sent_time)
             if time.time() - last_log_time > 1:
                 last_log_time = time.time()
-                logging.info(f"Throttle: {controller.get_combined_throttle()}, Steering: {controller.get_steering()}, Packet rate: {1/(time.time() - last_packet_sent_time)} Hz")
+                logging.info(f"Throttle: {controller.get_combined_throttle()}, Steering: {controller.get_steering()}, Packet rate: {1/wait_time} Hz")
             if wait_time > 0:
                 time.sleep(wait_time)
             if crsf_frame == None or ser == None:
