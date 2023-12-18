@@ -38,7 +38,7 @@ def steering_curve(x):
     else:
         sign = 1
     x = abs(x)
-    val = pow(x, 1/3)*sign
+    val = 2*x
     if val < -1:
         val = -1
     if val > 1:
