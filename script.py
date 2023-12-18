@@ -10,6 +10,7 @@ os.environ["SDL_VIDEODRIVER"] = "dummy"
 logging.basicConfig(level=logging.DEBUG)
 
 target_packet_rate_hz = 500
+steering_deadzone = 0.05
 
 try:
     import pigpio
@@ -38,7 +39,10 @@ def steering_curve(x):
     else:
         sign = 1
     x = abs(x)
-    val = pow(x, 0.5)*sign
+    if x < steering_deadzone:
+        val = 0
+    else:
+        val = pow(x, 0.7)*sign
     if val < -1:
         val = -1
     if val > 1:
