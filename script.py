@@ -71,7 +71,9 @@ def main():
         if controller != None:
             if time.time() - last_log_time > 1:
                 last_log_time = time.time()
-                logging.info(f"Throttle: {int((controller.get_combined_throttle()*500) + 1500)}, Steering: {int((controller.get_steering()*500) + 1500)}, Packet rate: {measured_packet_rate} Hz, Frame size: {frame_size} bytes, Last frame: {last_sent_frame}")
+                # Format the bytes of the last frame into a hex string
+                last_frame_hex = " ".join("{:02x}".format(c) for c in last_sent_frame)
+                logging.info(f"Throttle: {int((controller.get_combined_throttle()*500) + 1500)}, Steering: {int((controller.get_steering()*500) + 1500)}, Packet rate: {measured_packet_rate} Hz, Frame size: {frame_size} bytes, Last frame: {last_frame_hex}")
             wait_time = (1/target_packet_rate_hz) - (time.time() - last_packet_sent_time)
             if wait_time > 0:
                 time.sleep(wait_time)
