@@ -73,8 +73,8 @@ def main():
                 time.sleep(wait_time)
             if crsf_frame == None or ser == None:
                 continue
-            throttle_value = (controller.get_combined_throttle()*500) + 1500
-            steering_value = (controller.get_steering()*500) + 1500
+            throttle_value = int((controller.get_combined_throttle()*500) + 1500)
+            steering_value = int((controller.get_steering()*500) + 1500)
             frame = crsf_build_frame(
                 PacketsTypes.RC_CHANNELS_PACKED,
                 {"channels": [throttle_value, steering_value, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]},)
