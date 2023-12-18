@@ -67,14 +67,14 @@ def main():
         if controller != None:
             if time.time() - last_log_time > 1:
                 last_log_time = time.time()
-                logging.info(f"Throttle: {controller.get_combined_throttle()}, Steering: {controller.get_steering()}, Packet rate: {measured_packet_rate} Hz")
+                logging.info(f"Throttle: {(controller.get_combined_throttle()*500) + 1500}, Steering: {(controller.get_steering()*500) + 1500}, Packet rate: {measured_packet_rate} Hz")
             wait_time = 0.004 - (time.time() - last_packet_sent_time)
             if wait_time > 0:
                 time.sleep(wait_time)
             if crsf_frame == None or ser == None:
                 continue
-            throttle_value = map_to_int(controller.get_combined_throttle(), -1, 1, 1000, 2000)
-            steering_value = map_to_int(controller.get_steering(), -1, 1, 1000, 2000)
+            throttle_value = (controller.get_combined_throttle()*500) + 1500
+            steering_value = (controller.get_steering()*500) + 1500
             frame = crsf_build_frame(
                 PacketsTypes.RC_CHANNELS_PACKED,
                 {"channels": [throttle_value, steering_value, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]},)
