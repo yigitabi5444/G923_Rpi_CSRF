@@ -83,7 +83,7 @@ def main():
             steering_value = int((controller.get_steering()*810) + 992)
             frame = crsf_build_frame(
                 PacketsTypes.RC_CHANNELS_PACKED,
-                {"channels": [throttle_value, steering_value, steering_value, steering_value, steering_value, steering_value, steering_value, steering_value, steering_value, steering_value, steering_value, steering_value, steering_value, steering_value, steering_value, steering_value]},)
+                {"channels": [throttle_value, steering_value, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850]},)
             frame_size = len(frame)
             ser.write(frame)
             last_sent_frame = frame
