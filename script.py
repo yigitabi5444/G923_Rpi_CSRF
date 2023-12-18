@@ -79,7 +79,7 @@ def main():
             steering_value = int((controller.get_steering()*500) + 1500)
             frame = crsf_build_frame(
                 PacketsTypes.RC_CHANNELS_PACKED,
-                {"channels": [throttle_value, steering_value, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500]},)
+                {"channels": [throttle_value, steering_value]},)
             ser.write(frame)
             measured_packet_rate = 1/(time.time() - last_packet_sent_time)
             last_packet_sent_time = time.time()
