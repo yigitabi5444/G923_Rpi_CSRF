@@ -13,6 +13,8 @@ sudo sed -i -e '$i \sudo update-initramfs -u\n' /etc/rc.local
 sudo sed -i -e '$i \dtoverlay=disable-bt\n' /boot/config.txt
 # remove console=serial0,115200 from /boot/cmdline.txt
 sudo sed -i -e 's/console=serial0,115200 //g' /boot/cmdline.txt
-# Add cd ~ && cd G923* && sudo sh run.sh to /etc/rc.local
-sudo sed -i -e '$i \cd ~ && cd G923* && sudo sh run.sh\n' /etc/rc.local
+# Add cd /usr/src/G923_Rpi_CSRF && sudo sh run.sh to /etc/rc.local
+sudo sed -i -e '$i \cd /usr/src/G923_Rpi_CSRF && sudo sh run.sh\n' /etc/rc.local
+# Clone the repo
+cd /usr/src && sudo rm -rf ./G923_Rpi_CSRF && sudo git clone https://github.com/yigitabi5444/G923_Rpi_CSRF.git && cd /usr/src/G923_Rpi_CSRF && sudo sh run.sh
 sudo reboot

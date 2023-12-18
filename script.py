@@ -18,8 +18,26 @@ except ImportError as e:
     logging.warn("Failed to load pigpio library, running in debug mode")
     pigpio = None
     
-def map_to_int(value:float, in_min:float, in_max:float, out_min:int, out_max:int):
-    return int((value - in_min) * (out_max - out_min) / (in_max - in_min) + out_min)
+
+def throtle_curve(x):
+    sign = x/abs(x)
+    x = abs(x)
+    val = pow(x, 3.5)*sign
+    if val < -1:
+        val = -1
+    if val > 1:
+        val = 1
+    return val
+    
+def steering_curve(x):
+    sign = x/abs(x)
+    x = abs(x)
+    val = pow(x, 0.25)*sign
+    if val < -1:
+        val = -1
+    if val > 1:
+        val = 1
+    return val
     
 try:
     from crsf_parser.payloads import PacketsTypes
@@ -79,8 +97,8 @@ def main():
                 time.sleep(wait_time)
             if crsf_frame == None or ser == None:
                 continue
-            throttle_value = int((controller.get_combined_throttle()*810*controller.get_combined_throttle()*controller.get_combined_throttle()) + 992)
-            steering_value = int((controller.get_steering()*810) + 992)
+            throttle_value = int((throtle_curve(controller.get_combined_throttle())*810*controller.get_combined_throttle()*controller.get_combined_throttle()) + 992)
+            steering_value = int((steering_curve(controller.get_steering())*810) + 992)
             frame = crsf_build_frame(
                 PacketsTypes.RC_CHANNELS_PACKED,
                 {"channels": [992, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992, steering_value, throttle_value]},)
