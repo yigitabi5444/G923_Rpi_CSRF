@@ -77,9 +77,9 @@ void loop()
     size_t numBytesRead = Serial2.readBytes(_rcs_buf, SBUS_BUFFER_SIZE);
     if (numBytesRead > 0)
     {
-      //crsf_parse(&_rcs_buf[0], SBUS_BUFFER_SIZE, &_raw_rc_values[0], &_raw_rc_count, RC_INPUT_MAX_CHANNELS);
+      crsf_parse(&_rcs_buf[0], SBUS_BUFFER_SIZE, &_raw_rc_values[0], &_raw_rc_count, RC_INPUT_MAX_CHANNELS);
 
-      memcpy(_raw_rc_values, parse_csrf_channels(), sizeof(_raw_rc_values));
+      //memcpy(_raw_rc_values, parse_csrf_channels(), sizeof(_raw_rc_values));
 
       // wait for 100ms before starting to set the servos after the first signal is received
       if (last_no_signal_time - millis() > 500)
@@ -100,7 +100,14 @@ void loop()
         // Serial.print("\tChannel 7: ");
         // Serial.print(_raw_rc_values[6]);
         // Serial.print("\tChannel 8: ");
-        // Serial.print(_raw_rc_values[7]);      
+        // Serial.print(_raw_rc_values[7]); 
+
+        String channel_string = "";
+        for (int i = 0; i < 16; i++)
+        {
+          channel_string += String(i) + ":" + String(_raw_rc_values[i]) + " ";
+        }     
+        Serial.println(channel_string);
 
 
         setServoUs(_raw_rc_values[0], throttlePWMChannel);
