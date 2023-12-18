@@ -33,7 +33,7 @@ def main():
     pygame.init()
     try:
         ser = serial.Serial('/dev/serial0',
-                        baudrate=420000,
+                        baudrate=400000,
                         parity=serial.PARITY_NONE,
                         stopbits=serial.STOPBITS_ONE)
     except:
