@@ -33,11 +33,6 @@ def throtle_curve(x):
     return val
     
 def steering_curve(x):
-    if x != 0:
-        sign = x/abs(x)
-    else:
-        sign = 1
-    x = abs(x)
     val = 2*x
     if val < -1:
         val = -1
