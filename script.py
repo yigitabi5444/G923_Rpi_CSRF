@@ -9,7 +9,7 @@ os.environ["SDL_VIDEODRIVER"] = "dummy"
 
 logging.basicConfig(level=logging.DEBUG)
 
-target_packet_rate_hz = 500
+target_packet_rate_hz = 100
 steering_deadzone = 0.05
 
 try:
