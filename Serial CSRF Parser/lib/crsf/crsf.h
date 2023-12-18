@@ -62,7 +62,7 @@ struct crsf_frame_t {
 	uint8_t payload[CRSF_PAYLOAD_SIZE_MAX + 1]; ///< payload data including 1 byte CRC at end
 };
 
-#define RC_INPUT_MAX_CHANNELS 18 	// Maximum number of R/C input channels in the system. S.Bus has up to 18 channels.
+#define RC_INPUT_MAX_CHANNELS 16 	// Maximum number of R/C input channels in the system. S.Bus has up to 18 channels.
 
 
 /**
