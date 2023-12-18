@@ -20,7 +20,10 @@ except ImportError as e:
     
 
 def throtle_curve(x):
-    sign = x/abs(x)
+    if x != 0:
+        sign = x/abs(x)
+    else:
+        sign = 1
     x = abs(x)
     val = pow(x, 3.5)*sign
     if val < -1:
@@ -30,7 +33,10 @@ def throtle_curve(x):
     return val
     
 def steering_curve(x):
-    sign = x/abs(x)
+    if x != 0:
+        sign = x/abs(x)
+    else:
+        sign = 1
     x = abs(x)
     val = pow(x, 0.25)*sign
     if val < -1:
